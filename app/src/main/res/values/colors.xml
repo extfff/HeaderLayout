@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- 通用 -->
+    <color name="app_background">#f6f6f6</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="white_half">#99ffffff</color>
+    <color name="blue">#28a7e1</color>
+    <color name="blue_selected">#4087cb</color>
+    <color name="gray">#eaeaea</color>
+    <color name="gray_light">#eeeeee</color>
+    <color name="gray_dark">#9f9f9f</color>
+    <color name="gray_dark_2">#808080</color>
+    <color name="red">#eb3b3b</color>
+    <color name="green">#32b16c</color>
+    <color name="light">#FFEEEEEE</color>
+    <color name="yellow">#FFFF01</color>
+    <color name="blue_bg">#0078FF</color>
+    <color name="red_light">#F07879</color>
+    <color name="orange">#FF6700</color>
+    <color name="yellow_dark">#FFCF2E</color>
+</resources>

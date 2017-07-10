@@ -1,25 +1,4 @@
-# HeaderLayout
-欢迎大家使用。<br>
-此自定义控件为头部标题栏控件<br><br>
-<B>主要提供内容：</B>
-
-左边按钮：
-默认支持icon和文字两种方式（只能选一个，左边按钮默认只有一个）
-
-标题文字：
-支持居左和居中显示
-
-右边按钮：
-最多支持四个显示（2个文字、2个按钮 ）
-
-自定义效果：
-控件基于RelativeLayout，所以可以自由添加需要的内容
-![截了个图](./img.png)
-
-<B>调用步骤：</B><br><br>
-**1、可配置的所有内容**
-
-	<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="hl_status_padding_iv" type="id"/>
     <item name="hl_navigation_view" type="id"/>
@@ -73,30 +52,3 @@
         <attr name="hlTitleAlignLeft" format="boolean"/>  <!-- 居左显示 -->
     </declare-styleable>
 </resources>
-
-**2、布局引用**
-
-	<com.vendor.lib.widget.HeaderLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/title_bg"
-        app:hlItemTextColor="@color/green"
-        app:hlItemTextSize="13sp"
-        app:hlNavigationMinWidth="45dp"
-        app:hlTitleAlignLeft="true"
-        app:hlNavigationScaleType="centerInside"
-        app:hlNavigationIcon="@mipmap/back_btn"
-        app:hlSupportTranslucentStatus="false"
-        app:hlTitleText="@string/app_name"
-        app:hlTitleTextColor="@color/black"
-        app:hlTitleTextSize="18sp"
-        app:hlMenuIcon="@mipmap/edit_ic"
-        app:hlMenuIconId="@+id/edit_btn"
-        app:hlMenuText="@string/edit"
-        app:hlMenuTextId="@+id/edit_btn"
-        app:hlMenu2Icon="@mipmap/add_ic"
-        app:hlMenu2IconId="@+id/add_btn"
-        app:hlMenu2Text="@string/add"
-        app:hlMenu2TextId="@+id/add_btn" >
-
-有问题联系：QQ群 254202293
