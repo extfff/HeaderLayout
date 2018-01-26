@@ -1,4 +1,4 @@
-package com.vendor.lib.widget;
+package com.vendor.widget.headerlayout;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.vendor.sample.R;
 
 /**
  * 实现头部布局

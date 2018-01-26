@@ -2,8 +2,8 @@
 apply plugin: 'maven'
 // 2.maven-信息
 ext {// ext is a gradle closure allowing the declaration of global properties
-    PUBLISH_GROUP_ID = 'com.vendor'
-    PUBLISH_ARTIFACT_ID = 'social'
+    PUBLISH_GROUP_ID = 'com.vendor.widget'
+    PUBLISH_ARTIFACT_ID = 'headerlayout'
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
 // 3.maven-路径

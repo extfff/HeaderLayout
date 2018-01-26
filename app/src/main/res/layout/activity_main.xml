@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.vendor.lib.widget.HeaderLayout
+    <com.vendor.widget.headerlayout.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
@@ -19,7 +19,7 @@
         app:hlTitleTextColor="@color/black"
         app:hlTitleTextSize="18sp" />
 
-    <com.vendor.lib.widget.HeaderLayout
+    <com.vendor.widget.headerlayout.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
@@ -34,7 +34,7 @@
         app:hlTitleTextColor="@color/black"
         app:hlTitleTextSize="18sp" />
 
-    <com.vendor.lib.widget.HeaderLayout
+    <com.vendor.widget.headerlayout.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
@@ -52,7 +52,7 @@
         app:hlMenu2Icon="@mipmap/add_ic"
         app:hlMenu2IconId="@+id/add_btn" />
 
-    <com.vendor.lib.widget.HeaderLayout
+    <com.vendor.widget.headerlayout.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
@@ -70,7 +70,7 @@
         app:hlMenu2Icon="@mipmap/add_ic"
         app:hlMenu2IconId="@+id/add_btn" />
 
-    <com.vendor.lib.widget.HeaderLayout
+    <com.vendor.widget.headerlayout.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
@@ -88,7 +88,7 @@
         app:hlMenu2Text="@string/add"
         app:hlMenu2TextId="@+id/add_btn" />
 
-    <com.vendor.lib.widget.HeaderLayout
+    <com.vendor.widget.headerlayout.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
@@ -108,7 +108,7 @@
         app:hlMenu2Text="@string/add"
         app:hlMenu2TextId="@+id/add_btn" />
 
-    <com.vendor.lib.widget.HeaderLayout
+    <com.vendor.widget.headerlayout.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
@@ -129,7 +129,7 @@
         app:hlMenu2Text="@string/add"
         app:hlMenu2TextId="@+id/add_btn" />
 
-    <com.vendor.lib.widget.HeaderLayout
+    <com.vendor.widget.headerlayout.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
