@@ -1,6 +1,13 @@
 # HeaderLayout
 欢迎大家使用。<br>
 此自定义控件为头部标题栏控件<br><br>
+
+<B>集成方法：</B>
+
+    allprojects {        repositories {            maven { url "https://raw.githubusercontent.com/extfff/repos/master" }        }    }
+
+    dependencies {        compile 'com.vendor.widget:headerlayout:1.0'    }
+
 <B>主要提供内容：</B>
 
 左边按钮：
