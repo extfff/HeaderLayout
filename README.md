@@ -26,8 +26,8 @@
 <B>调用步骤：</B><br><br>
 **1、可配置的所有内容**
 
-	<?xml version="1.0" encoding="utf-8"?>
-<resources>
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
     <item name="hl_status_padding_iv" type="id"/>
     <item name="hl_navigation_view" type="id"/>
 
@@ -83,7 +83,7 @@
 
 **2、布局引用**
 
-	<com.vendor.lib.widget.HeaderLayout
+    <com.vendor.lib.widget.HeaderLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/title_bg"
