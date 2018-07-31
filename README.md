@@ -6,7 +6,7 @@
 
     allprojects {        repositories {            maven { url "https://raw.githubusercontent.com/extfff/repos/master" }        }    }
 
-    dependencies {        compile 'com.vendor.widget:headerlayout:1.0'    }
+    dependencies {        compile 'com.vendor.widget:headerlayout:1.1'    }
 
 <B>主要提供内容：</B>
 
@@ -26,10 +26,8 @@
 <B>调用步骤：</B><br><br>
 **1、可配置的所有内容**
 
-    <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-    <item name="hl_status_padding_iv" type="id"/>
-    <item name="hl_navigation_view" type="id"/>
+    <item name="hl_iv_status_padding" type="id"/>
+    <item name="hl_view_navigation" type="id"/>
 
     <color name="default_header_layout_title_textColor">#fff</color>
     <dimen name="default_header_layout_title_textSize">20sp</dimen>
@@ -40,9 +38,14 @@
         <attr name="hlTitleText" format="string"/>
         <attr name="hlTitleTextColor" format="color"/>
         <attr name="hlTitleTextSize" format="dimension"/>
+        <attr name="hlTitleTextDrawableTop" format="reference"/>
+        <attr name="hlTitleTextDrawableStart" format="reference"/>
+        <attr name="hlTitleTextDrawableEnd" format="reference"/>
+        <attr name="hlTitleTextDrawableBottom" format="reference"/>
+        <attr name="hlTitleTextDrawablePadding" format="dimension"/>
         <attr name="hlItemTextColor" format="color"/>  <!-- 所有按钮文字按钮颜色 -->
         <attr name="hlItemTextSize" format="dimension"/>  <!-- 所有按钮文字按钮大小-->
-        <attr name="hlItemTextPaddingLeftAndRight" format="dimension"/>  <!-- 所有文字按钮左右间距 -->
+        <attr name="hlItemTextPaddingStartAndEnd" format="dimension"/>  <!-- 所有文字按钮左右间距 -->
         <attr name="hlNavigationIcon" format="reference"/>   <!-- 返回按钮 or 左边按钮 图片 二选一 -->
         <attr name="hlNavigationText" format="reference"/>   <!-- 返回按钮 or 左边按钮 文字 二选一 -->
         <attr name="hlNavigationWidth" format="dimension" />
@@ -79,7 +82,6 @@
         <attr name="hlSpitLineHeight" format="dimension"/>   <!-- 底部分割线 -->
         <attr name="hlTitleAlignLeft" format="boolean"/>  <!-- 居左显示 -->
     </declare-styleable>
-</resources>
 
 **2、布局引用**
 
@@ -92,18 +94,18 @@
         app:hlNavigationMinWidth="45dp"
         app:hlTitleAlignLeft="true"
         app:hlNavigationScaleType="centerInside"
-        app:hlNavigationIcon="@mipmap/back_btn"
+        app:hlNavigationIcon="@drawable/ic_back"
         app:hlSupportTranslucentStatus="false"
         app:hlTitleText="@string/app_name"
         app:hlTitleTextColor="@color/black"
         app:hlTitleTextSize="18sp"
-        app:hlMenuIcon="@mipmap/edit_ic"
-        app:hlMenuIconId="@+id/edit_btn"
+        app:hlMenuIcon="@drawable/iv_edit"
+        app:hlMenuIconId="@+id/btn_edit"
         app:hlMenuText="@string/edit"
-        app:hlMenuTextId="@+id/edit_btn"
-        app:hlMenu2Icon="@mipmap/add_ic"
-        app:hlMenu2IconId="@+id/add_btn"
+        app:hlMenuTextId="@+id/btn_edit"
+        app:hlMenu2Icon="@drawable/iv_add"
+        app:hlMenu2IconId="@+id/iv_add"
         app:hlMenu2Text="@string/add"
-        app:hlMenu2TextId="@+id/add_btn" >
+        app:hlMenu2TextId="@+id/btn_add" />
 
 有问题联系：QQ群 254202293
