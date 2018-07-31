@@ -11,14 +11,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //...
             }
         });
 
-        findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //...

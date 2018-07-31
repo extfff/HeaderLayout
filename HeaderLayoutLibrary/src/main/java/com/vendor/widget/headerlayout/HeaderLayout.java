@@ -334,10 +334,10 @@ public class HeaderLayout extends RelativeLayout {
         }
     }
 
-    private View addButtonConfig(ImageView view, int navigationIcon, int navigationScaleType) {
+    private void addButtonConfig(ImageView view, int navigationIcon, int navigationScaleType) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if (params == null) {
-            return null;
+            return;
         }
 
         if (params instanceof LayoutParams) {  //createMenuIconButton传入的是LinearLayout.LayoutParams
@@ -378,10 +378,9 @@ public class HeaderLayout extends RelativeLayout {
             view.setScaleType(sScaleTypeArray[navigationScaleType]);
         }
 
-        return view;
     }
 
-    private View addButtonConfig(TextView view, String text, float textSize, int textColor, int padding) {
+    private void addButtonConfig(TextView view, String text, float textSize, int textColor, int padding) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
 
         if (params instanceof LayoutParams) {
@@ -421,7 +420,6 @@ public class HeaderLayout extends RelativeLayout {
         view.setPadding(padding, 0, padding, 0);
         view.setGravity(Gravity.CENTER);
 
-        return view;
     }
 
     /**
