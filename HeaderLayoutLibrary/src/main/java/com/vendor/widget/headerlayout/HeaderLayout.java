@@ -3,6 +3,7 @@ package com.vendor.widget.headerlayout;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -77,7 +78,7 @@ public class HeaderLayout extends RelativeLayout {
 
     private int mHedaderLayoutHeight = 0;
 
-    private int mTitleTextColor;
+    private ColorStateList mTitleTextColor;
     private float mTitleTextSize;
     private boolean mTitleAlignLeft;
 
@@ -90,7 +91,7 @@ public class HeaderLayout extends RelativeLayout {
     private float mNavigationMaxHeight;
 
     private LinearLayout mLlMenu;  //用于存储右边按钮
-    private int mItemTextColor;
+    private ColorStateList mItemTextColor;
     private float mItemTextSize;
     private float mItemTextPaddingLeftAndRight;
 
@@ -138,7 +139,10 @@ public class HeaderLayout extends RelativeLayout {
 
             //标题相关配置
             titleText = a.getString(R.styleable.HeaderLayout_hlTitleText);
-            mTitleTextColor = a.getColor(R.styleable.HeaderLayout_hlTitleTextColor, getResources().getColor(R.color.default_header_layout_title_textColor));
+            mTitleTextColor = a.getColorStateList(R.styleable.HeaderLayout_hlTitleTextColor);
+            if(mTitleTextColor == null) {
+                mTitleTextColor = getResources().getColorStateList(R.color.default_header_layout_title_textColor);
+            }
             mTitleTextSize = a.getDimension(R.styleable.HeaderLayout_hlTitleTextSize, getResources().getDimension(R.dimen.default_header_layout_title_textSize));
             mTitleAlignLeft = a.getBoolean(R.styleable.HeaderLayout_hlTitleAlignLeft, false);
 
@@ -163,7 +167,10 @@ public class HeaderLayout extends RelativeLayout {
             menu2TextId = a.getResourceId(R.styleable.HeaderLayout_hlMenu2TextId, +0xa25);
 
             //文字按钮相关配置
-            mItemTextColor = a.getColor(R.styleable.HeaderLayout_hlItemTextColor, getResources().getColor(R.color.default_header_layout_title_textColor));
+            mItemTextColor = a.getColorStateList(R.styleable.HeaderLayout_hlItemTextColor);
+            if(mItemTextColor == null) {
+                mItemTextColor = getResources().getColorStateList(R.color.default_header_layout_title_textColor);
+            }
             mItemTextSize = a.getDimension(R.styleable.HeaderLayout_hlItemTextSize, getResources().getDimension(R.dimen.default_header_layout_menu_textSize));
             mItemTextPaddingLeftAndRight = a.getDimension(R.styleable.HeaderLayout_hlItemTextPaddingStartAndEnd, getResources().getDimension(R.dimen.default_header_layout_menu_textSize) / 2);  //大概半个字的间距
 
@@ -380,7 +387,7 @@ public class HeaderLayout extends RelativeLayout {
 
     }
 
-    private void addButtonConfig(TextView view, String text, float textSize, int textColor, int padding) {
+    private void addButtonConfig(TextView view, String text, float textSize, ColorStateList textColor, int padding) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
 
         if (params instanceof LayoutParams) {

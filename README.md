@@ -6,7 +6,7 @@
 
     allprojects {        repositories {            maven { url "https://raw.githubusercontent.com/extfff/repos/master" }        }    }
 
-    dependencies {        compile 'com.vendor.widget:headerlayout:1.1'    }
+    dependencies {        compile 'com.vendor.widget:headerlayout:1.1.1'    }
 
 <B>主要提供内容：</B>
 
