@@ -1,9 +1,11 @@
 package com.vendor.widget.headerlayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
@@ -23,28 +25,6 @@ import android.widget.TextView;
  */
 public class HeaderLayout extends RelativeLayout {
 
-    private boolean isSupportTranslucentStatus;  //是否支持状态栏沉浸
-
-    private int mSpitLineColor;
-    private float mSpitLineHeight;
-
-    private ImageView mStatusPaddingIv;
-    private TextView mTitleTv;
-
-    private int mHedaderLayoutHeight = 0;
-
-    private int mTitleTextColor;
-    private float mTitleTextSize;
-    private boolean mTitleAlignLeft;
-
-    private View mNavigationView;
-    private float mNavigationWidth;
-    private float mNavigationMinWidth;
-    private float mNavigationMaxWidth;
-    private float mNavigationHeight;
-    private float mNavigationMinHeight;
-    private float mNavigationMaxHeight;
-
     private static final ImageView.ScaleType[] sScaleTypeArray = {
             ImageView.ScaleType.MATRIX,
             ImageView.ScaleType.FIT_XY,
@@ -54,17 +34,6 @@ public class HeaderLayout extends RelativeLayout {
             ImageView.ScaleType.CENTER,
             ImageView.ScaleType.CENTER_CROP,
             ImageView.ScaleType.CENTER_INSIDE
-    };
-
-    private LinearLayout mMenuLl;  //用于存储右边按钮
-    private int mItemTextColor;
-    private float mItemTextSize;
-    private float mItemTextPaddingLeftAndRight;
-
-    private static final MenuAlign[] sMenuAlignArray = {
-            MenuAlign.ALIGN_TEXT,
-            MenuAlign.ALIGN_ICON,
-            MenuAlign.ALTERNATE
     };
 
     private enum MenuAlign {
@@ -98,6 +67,33 @@ public class HeaderLayout extends RelativeLayout {
         }
     }
 
+    private boolean isSupportTranslucentStatus;  //是否支持状态栏沉浸
+
+    private int mSpitLineColor;
+    private float mSpitLineHeight;
+
+    private ImageView mIvStatusPadding;
+    private TextView mTvTitle;
+
+    private int mHedaderLayoutHeight = 0;
+
+    private int mTitleTextColor;
+    private float mTitleTextSize;
+    private boolean mTitleAlignLeft;
+
+    private View mNavigationView;
+    private float mNavigationWidth;
+    private float mNavigationMinWidth;
+    private float mNavigationMaxWidth;
+    private float mNavigationHeight;
+    private float mNavigationMinHeight;
+    private float mNavigationMaxHeight;
+
+    private LinearLayout mLlMenu;  //用于存储右边按钮
+    private int mItemTextColor;
+    private float mItemTextSize;
+    private float mItemTextPaddingLeftAndRight;
+
     public HeaderLayout(Context context) {
         this(context, null);
     }
@@ -119,6 +115,12 @@ public class HeaderLayout extends RelativeLayout {
 
     private void init(Context context, AttributeSet attrs) {
         String titleText = "";
+        Drawable titleDrawableStart = null;
+        Drawable titleDrawableTop = null;
+        Drawable titleDrawableEnd = null;
+        Drawable titleDrawableBottom = null;
+        float titleDrawablePadding = 0;
+
         int navigationIcon = 0;
         String navigationText = "";
         int navigationScaleType = -1;
@@ -139,12 +141,31 @@ public class HeaderLayout extends RelativeLayout {
             mTitleTextColor = a.getColor(R.styleable.HeaderLayout_hlTitleTextColor, getResources().getColor(R.color.default_header_layout_title_textColor));
             mTitleTextSize = a.getDimension(R.styleable.HeaderLayout_hlTitleTextSize, getResources().getDimension(R.dimen.default_header_layout_title_textSize));
             mTitleAlignLeft = a.getBoolean(R.styleable.HeaderLayout_hlTitleAlignLeft, false);
+
+            int titleDrawableStartRes = a.getResourceId(R.styleable.HeaderLayout_hlTitleTextDrawableStart, 0);
+            int titleDrawableTopRes = a.getResourceId(R.styleable.HeaderLayout_hlTitleTextDrawableTop, 0);
+            int titleDrawableEndRes = a.getResourceId(R.styleable.HeaderLayout_hlTitleTextDrawableEnd, 0);
+            int titleDrawableBottomRes = a.getResourceId(R.styleable.HeaderLayout_hlTitleTextDrawableBottom, 0);
+            titleDrawablePadding = a.getDimension(R.styleable.HeaderLayout_hlTitleTextDrawablePadding, 0);
+            if(titleDrawableStartRes != 0) {
+                titleDrawableStart = getResources().getDrawable(titleDrawableStartRes);
+            }
+            if(titleDrawableTopRes != 0) {
+                titleDrawableTop = getResources().getDrawable(titleDrawableTopRes);
+            }
+            if(titleDrawableEndRes != 0) {
+                titleDrawableEnd = getResources().getDrawable(titleDrawableEndRes);
+            }
+            if(titleDrawableBottomRes != 0) {
+                titleDrawableBottom = getResources().getDrawable(titleDrawableBottomRes);
+            }
+
             menu2TextId = a.getResourceId(R.styleable.HeaderLayout_hlMenu2TextId, +0xa25);
 
             //文字按钮相关配置
             mItemTextColor = a.getColor(R.styleable.HeaderLayout_hlItemTextColor, getResources().getColor(R.color.default_header_layout_title_textColor));
             mItemTextSize = a.getDimension(R.styleable.HeaderLayout_hlItemTextSize, getResources().getDimension(R.dimen.default_header_layout_menu_textSize));
-            mItemTextPaddingLeftAndRight = a.getDimension(R.styleable.HeaderLayout_hlItemTextPaddingLeftAndRight, getResources().getDimension(R.dimen.default_header_layout_menu_textSize) / 2);  //大概半个字的间距
+            mItemTextPaddingLeftAndRight = a.getDimension(R.styleable.HeaderLayout_hlItemTextPaddingStartAndEnd, getResources().getDimension(R.dimen.default_header_layout_menu_textSize) / 2);  //大概半个字的间距
 
             navigationIcon = a.getResourceId(R.styleable.HeaderLayout_hlNavigationIcon, 0);
             navigationText = a.getString(R.styleable.HeaderLayout_hlNavigationText);
@@ -174,20 +195,20 @@ public class HeaderLayout extends RelativeLayout {
         LayoutParams params;
 
         //头部间距  用于状态栏沉浸时候使用
-        mStatusPaddingIv = new ImageView(context);
-        mStatusPaddingIv.setId(R.id.hl_status_padding_iv);
-        addView(mStatusPaddingIv);
+        mIvStatusPadding = new ImageView(context);
+        mIvStatusPadding.setId(R.id.hl_iv_status_padding);
+        addView(mIvStatusPadding);
 
         //左边按钮
         if(navigationIcon != 0) {
             mNavigationView = new ImageView(getContext());
             addView(mNavigationView);
-            mNavigationView.setId(R.id.hl_navigation_view);
+            mNavigationView.setId(R.id.hl_view_navigation);
             addButtonConfig((ImageView) mNavigationView, navigationIcon, navigationScaleType);
         } else if(!TextUtils.isEmpty(navigationText)){
             mNavigationView = new TextView(getContext());
             addView(mNavigationView);
-            mNavigationView.setId(R.id.hl_navigation_view);
+            mNavigationView.setId(R.id.hl_view_navigation);
             addButtonConfig((TextView) mNavigationView, navigationText, mItemTextSize, mItemTextColor, (int) mItemTextPaddingLeftAndRight);
         }
         if(mNavigationView != null) {
@@ -200,16 +221,16 @@ public class HeaderLayout extends RelativeLayout {
         }
 
         if (menuIcon != 0 || !TextUtils.isEmpty(menuText)) {  //说明有右边按钮
-            mMenuLl = new LinearLayout(getContext());
-            mMenuLl.setOrientation(LinearLayout.HORIZONTAL);
-            addView(mMenuLl);
+            mLlMenu = new LinearLayout(getContext());
+            mLlMenu.setOrientation(LinearLayout.HORIZONTAL);
+            addView(mLlMenu);
 
-            params = (LayoutParams) mMenuLl.getLayoutParams();
+            params = (LayoutParams) mLlMenu.getLayoutParams();
             params.width = LayoutParams.WRAP_CONTENT;
             params.height = LayoutParams.MATCH_PARENT;
-            params.addRule(RelativeLayout.BELOW, mStatusPaddingIv.getId());
+            params.addRule(RelativeLayout.BELOW, mIvStatusPadding.getId());
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            mMenuLl.setLayoutParams(params);
+            mLlMenu.setLayoutParams(params);
 
             switch (MenuAlign.getType(menuAlignType)) {
                 case ALIGN_TEXT:
@@ -240,12 +261,24 @@ public class HeaderLayout extends RelativeLayout {
         }
 
         //标题栏
-        mTitleTv = new TextView(getContext());
-        mTitleTv.setMaxLines(1);
-        addView(mTitleTv);
-        mTitleTv.setGravity(Gravity.CENTER);  //实现文字居中效果  在setSupportTranslucentStatus中设置高度和HeaderLayout一样就好了
-        params = (LayoutParams) mTitleTv.getLayoutParams();
-//        params.addRule(RelativeLayout.BELOW, mStatusPaddingIv.getId());  //本来需要这样处理，可是实际效果发现应该注释
+        mTvTitle = new TextView(getContext());
+        mTvTitle.setMaxLines(1);
+
+        // 设置drawable相关
+        if (titleDrawableStart != null || titleDrawableTop != null || titleDrawableEnd != null || titleDrawableBottom != null) {
+            mTvTitle.setCompoundDrawablesWithIntrinsicBounds(
+                    titleDrawableStart,
+                    titleDrawableTop,
+                    titleDrawableEnd,
+                    titleDrawableBottom
+            );
+        }
+        mTvTitle.setCompoundDrawablePadding((int) titleDrawablePadding);
+
+        addView(mTvTitle);
+        mTvTitle.setGravity(Gravity.CENTER);  //实现文字居中效果  在setSupportTranslucentStatus中设置高度和HeaderLayout一样就好了
+        params = (LayoutParams) mTvTitle.getLayoutParams();
+//        params.addRule(RelativeLayout.BELOW, mIvStatusPadding.getId());  //本来需要这样处理，可是实际效果发现应该注释
         params.width = LayoutParams.WRAP_CONTENT;
         params.height = LayoutParams.MATCH_PARENT;
 
@@ -256,26 +289,26 @@ public class HeaderLayout extends RelativeLayout {
                 params.addRule(RelativeLayout.RIGHT_OF, mNavigationView.getId());  //基于左边按钮的显示
             } else {
                 params.leftMargin = (int)(mTitleTextSize / 2);  //基于左边的显示
-                params.addRule(RelativeLayout.ALIGN_LEFT);
+                params.addRule(RelativeLayout.ALIGN_RIGHT);
             }
         }
-        mTitleTv.setLayoutParams(params);
+        mTvTitle.setLayoutParams(params);
 
-        mTitleTv.setText(titleText);
-        mTitleTv.setTextColor(mTitleTextColor);
-        mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
+        mTvTitle.setText(titleText);
+        mTvTitle.setTextColor(mTitleTextColor);
+        mTvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
 
         //底部的分割线
         if (mSpitLineColor != 0) {
-            ImageView splitLineIv = new ImageView(getContext());
-            addView(splitLineIv);
-            params = (LayoutParams) splitLineIv.getLayoutParams();
+            ImageView ivSplitLine = new ImageView(getContext());
+            addView(ivSplitLine);
+            params = (LayoutParams) ivSplitLine.getLayoutParams();
             params.width = LayoutParams.MATCH_PARENT;
             params.height = (int) mSpitLineHeight;
             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            splitLineIv.setLayoutParams(params);
+            ivSplitLine.setLayoutParams(params);
 
-            splitLineIv.setImageResource(mSpitLineColor);
+            ivSplitLine.setImageResource(mSpitLineColor);
         }
     }
 
@@ -285,7 +318,7 @@ public class HeaderLayout extends RelativeLayout {
             if (menuTextId != 0) {
                 tv.setId(menuTextId);
             }
-            mMenuLl.addView(tv);
+            mLlMenu.addView(tv);
             addButtonConfig(tv, menuText, mItemTextSize, mItemTextColor, (int) mItemTextPaddingLeftAndRight);
         }
     }
@@ -296,7 +329,7 @@ public class HeaderLayout extends RelativeLayout {
             if (menuIconId != 0) {
                 iv.setId(menuIconId);
             }
-            mMenuLl.addView(iv);
+            mLlMenu.addView(iv);
             addButtonConfig(iv, menuIcon, navigationScaleType);
         }
     }
@@ -308,7 +341,7 @@ public class HeaderLayout extends RelativeLayout {
         }
 
         if (params instanceof LayoutParams) {  //createMenuIconButton传入的是LinearLayout.LayoutParams
-            ((LayoutParams) params).addRule(RelativeLayout.BELOW, mStatusPaddingIv.getId());
+            ((LayoutParams) params).addRule(RelativeLayout.BELOW, mIvStatusPadding.getId());
         }
         if (mNavigationWidth > 0) {  //设置宽高属性
             params.width = (int) mNavigationWidth;
@@ -352,7 +385,7 @@ public class HeaderLayout extends RelativeLayout {
         ViewGroup.LayoutParams params = view.getLayoutParams();
 
         if (params instanceof LayoutParams) {
-            ((LayoutParams) params).addRule(RelativeLayout.BELOW, mStatusPaddingIv.getId());
+            ((LayoutParams) params).addRule(RelativeLayout.BELOW, mIvStatusPadding.getId());
         }
         if (mNavigationWidth > 0) {  //设置宽高属性
             params.width = (int) mNavigationWidth;
@@ -396,7 +429,7 @@ public class HeaderLayout extends RelativeLayout {
      * @return title 标题
      */
     public TextView getTitleView() {
-        return mTitleTv;
+        return mTvTitle;
     }
 
     /**
@@ -404,8 +437,8 @@ public class HeaderLayout extends RelativeLayout {
      * @param title 标题
      */
     public void setTitleText(String title) {
-        if(mTitleTv != null){
-            mTitleTv.setText(title);
+        if(mTvTitle != null){
+            mTvTitle.setText(title);
         }
     }
 
@@ -418,10 +451,20 @@ public class HeaderLayout extends RelativeLayout {
     }
 
     /***
-     * Navigation的左边按钮点击事件
+     * 左边按钮点击事件
      * @param l 点击监听
      */
     public void setOnNavigationClickListener(OnClickListener l) {  //处理返回键点击事件
+        if(mNavigationView != null) {
+            mNavigationView.setOnClickListener(l);
+        }
+    }
+
+    /***
+     * 右边按钮点击事件
+     * @param l 点击监听
+     */
+    public void setMenuClickListener(OnClickListener l) {  //处理返回键点击事件
         if(mNavigationView != null) {
             mNavigationView.setOnClickListener(l);
         }
@@ -446,12 +489,12 @@ public class HeaderLayout extends RelativeLayout {
         getLayoutParams().height = mHedaderLayoutHeight + top;
         setLayoutParams(getLayoutParams());
 
-        mTitleTv.setPadding(0, top + 1, 0, 0);
+        mTvTitle.setPadding(0, top + 1, 0, 0);
 
-        LayoutParams params = (LayoutParams) mStatusPaddingIv.getLayoutParams();
+        LayoutParams params = (LayoutParams) mIvStatusPadding.getLayoutParams();
         params.width = LayoutParams.MATCH_PARENT;
         params.height = top;
-        mStatusPaddingIv.setLayoutParams(params);
+        mIvStatusPadding.setLayoutParams(params);
     }
 
     /**
@@ -459,11 +502,11 @@ public class HeaderLayout extends RelativeLayout {
      * @param activity act
      * @return status bar height
      */
+    @SuppressLint("PrivateApi")
     public static int getStatusHeight(Activity activity) {
-        int statusHeight = 0;
         Rect localRect = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(localRect);
-        statusHeight = localRect.top;
+        int statusHeight = localRect.top;
         if (0 == statusHeight) {
             Class<?> localClass;
             try {

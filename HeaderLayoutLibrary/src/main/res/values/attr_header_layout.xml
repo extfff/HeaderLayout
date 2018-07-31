@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="hl_status_padding_iv" type="id"/>
-    <item name="hl_navigation_view" type="id"/>
+    <item name="hl_iv_status_padding" type="id"/>
+    <item name="hl_view_navigation" type="id"/>
 
     <color name="default_header_layout_title_textColor">#fff</color>
     <dimen name="default_header_layout_title_textSize">20sp</dimen>
@@ -12,9 +12,14 @@
         <attr name="hlTitleText" format="string"/>
         <attr name="hlTitleTextColor" format="color"/>
         <attr name="hlTitleTextSize" format="dimension"/>
+        <attr name="hlTitleTextDrawableTop" format="reference"/>
+        <attr name="hlTitleTextDrawableStart" format="reference"/>
+        <attr name="hlTitleTextDrawableEnd" format="reference"/>
+        <attr name="hlTitleTextDrawableBottom" format="reference"/>
+        <attr name="hlTitleTextDrawablePadding" format="dimension"/>
         <attr name="hlItemTextColor" format="color"/>  <!-- 所有按钮文字按钮颜色 -->
         <attr name="hlItemTextSize" format="dimension"/>  <!-- 所有按钮文字按钮大小-->
-        <attr name="hlItemTextPaddingLeftAndRight" format="dimension"/>  <!-- 所有文字按钮左右间距 -->
+        <attr name="hlItemTextPaddingStartAndEnd" format="dimension"/>  <!-- 所有文字按钮左右间距 -->
         <attr name="hlNavigationIcon" format="reference"/>   <!-- 返回按钮 or 左边按钮 图片 二选一 -->
         <attr name="hlNavigationText" format="reference"/>   <!-- 返回按钮 or 左边按钮 文字 二选一 -->
         <attr name="hlNavigationWidth" format="dimension" />
